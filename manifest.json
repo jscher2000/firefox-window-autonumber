@@ -1,7 +1,7 @@
 {
 	"name": "Auto-number Windows - stable menu order",
 	"description": "Keep your windows in the order they were opened on the Mac OS Window menu.",
-	"version": "0.2",
+	"version": "0.3",
 	"manifest_version": 2,
 	"browser_specific_settings":{
 		"gecko": {
@@ -16,5 +16,8 @@
 	},
 	"icons": {
 		"128": "icons/Win123.png"
-	}
+	},
+	"permissions": [
+		"menus"
+	]
 }
