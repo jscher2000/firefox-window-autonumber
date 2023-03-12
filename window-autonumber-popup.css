@@ -1,0 +1,203 @@
+/* Auto-number Windows - stable menu order 0.5 */
+
+/* Color scheme */
+@media (prefers-color-scheme: light) {
+	:root {
+		--body-text-color: #000;
+		--body-back-color: #f4f4f4;
+		--hover-focus-color: #aff;
+		--list-border-color: #333;
+		--focused-back-color: #ccc;
+	}
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--body-text-color: #f4f4f4;
+		--body-back-color: #333;
+		--hover-focus-color: #006;
+		--list-border-color: #aaa;
+		--focused-back-color: #000;
+	}
+}
+
+body {
+	color: var(--body-text-color);
+	background-color: var(--body-back-color);
+	margin: 0;
+	padding: 0 8px;
+	--body-width: 800px;
+	min-width: calc(var(--body-width) - 17px); /* adjust for scrollbar */
+	--body-height: 600px;
+	min-height: var(--body-height);
+	--body-size: 16px;
+	font-size: var(--body-size);
+	overflow-y: hidden;
+}
+#dialogtitle {
+	font-size: 1.25em;
+	font-weight: normal;
+	position: relative;
+	padding-left: 8px;
+	margin-block: 0.5em;
+}
+#controls {
+	position: absolute;
+	right: 0;
+	top: -0.4em;
+}
+#frmfilter {
+	display: inline;
+}
+#filterbar {
+	width: 11em;
+	margin-right: 4px;
+	border-radius: 4px;
+	padding-left: 4px;
+	color: var(--body-text-color);
+	background-color: var(--body-back-color);
+}
+#filterbar:focus {
+	background-color: var(--hover-focus-color);
+}
+#filterclear {
+	-moz-appearance: none;
+	appearance: none;
+	padding: 1px 1px 3px !important;
+	border-radius: 20px;
+	background-color: transparent !important;
+	border: none !important;
+	margin-left: -26px !important;
+}
+#filterclear:hover {
+	background-color: #ddd !important;
+}
+#filterbar:placeholder-shown + #filterclear {
+	display: none;
+}
+#btnRenumber:not(:hover), #closepop:not(:hover) {
+	background-color: transparent !important;
+	border-color: transparent !important;
+}
+
+#stretchbox {
+	overflow-y: auto;
+	max-height: 520px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+	outline-color: transparent;
+}
+li {
+	display: inline-block;
+	width: calc(50% - 1px);
+	margin: 0;
+	padding: 3px 0 2px 8px;
+	border-bottom: 1px solid var(--list-border-color);
+	position: relative;
+	white-space: nowrap;
+}
+li:nth-child(odd){
+	margin-right: 2px;
+}
+li:nth-child(1), li:nth-child(2){
+	border-top: 1px solid var(--list-border-color);
+}
+li:hover:not([focused="true"]):not([dummy="true"]), a:focus {
+	background-color: var(--hover-focus-color);
+	cursor: pointer;
+}
+li[incog="true"] span[tabcontext] {
+	padding-left: 18px;
+	background-image: url("icons/privateBrowsingDark.svg");
+	background-position: right;
+	background-repeat: no-repeat;
+	background-size: 16px;
+	vertical-align: top;
+}
+li[focused="true"]{
+	background-color: var(--focused-back-color);
+	cursor: default;
+}
+span.wintitle {
+	max-width: calc(100% - 20px);
+	display: inline-block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+li[incog="true"] span.wintitle {
+	max-width: calc(100% - 40px);
+}
+
+img.favicon[src] {
+	width: 16px;
+	height: 16px;
+	margin-left: -2px;
+	margin-right: 4px;
+	margin-bottom: 1px;
+}
+
+.btntablist {
+	display: none;
+}
+[showtabbtn] .btntablist {
+	position: absolute;
+	right: 2px;
+	padding: 2px;
+	background-color: #ddd;
+	border: none;
+	opacity: 0.75;
+}
+[showtabbtn] .btntablist:hover {
+	opacity: 1;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.btntablist img {
+	width: 16px;
+}
+li[dummy="true"] .btntablist {
+	display: none;
+}
+
+/* Rules for filtering */
+li[filterfail="true"]:not([hostbutton="open"]):not([hostbutton="closed"]),
+li[filterfail="all"] {
+	display: none;
+}
+li[filterfail="true"][hostbutton="open"] > span:not(:nth-of-type(3)), 
+li[filterfail="true"][hostbutton="closed"] > span:not(:nth-of-type(3)) {
+	opacity: 0.4;
+}
+li[filterfail="adds"] .expander {
+	display: none;
+}
+
+#oops {
+	display: none;
+	color: #ff0;
+	background-color: #333;
+	font-weight: bold;
+	position: fixed;
+	bottom: 0;
+	width: calc(100% - 24px);
+	height: 20px;
+}
+#oops span {
+	margin-left: 4px;
+}
+#btnclose {
+	position: absolute;
+	right: 0;
+}
+
+#divtabsperm p {
+	margin: 8px 0 0 2px;
+}
+#frmtabsperm label:hover {
+	background-color: var(--hover-focus-color);
+}

@@ -1,12 +1,12 @@
 {
 	"name": "Auto-number Windows - stable menu order",
-	"description": "Keep your windows in the order they were opened on the Mac OS Window menu.",
-	"version": "0.3",
-	"manifest_version": 2,
+	"description": "Keep your windows in the order they were opened on the Mac OS Window menu. (Manifest v3 version)",
+	"version": "0.5",
+	"manifest_version": 3,
 	"browser_specific_settings":{
 		"gecko": {
 			"id": "window-autonumber@jeffersonscher.com",
-			"strict_min_version": "68.0"
+			"strict_min_version": "109.0"
 		}
 	},
 	"background": {
@@ -15,9 +15,23 @@
 		]
 	},
 	"icons": {
-		"128": "icons/Win123.png"
+		"128": "icons/window-autonumber-128-light.png"
 	},
 	"permissions": [
-		"menus"
-	]
+		"menus",
+		"storage"
+	],
+	"optional_permissions": [
+		"tabs"
+	],
+	"action": {
+		"browser_style": true,
+		"default_title": "Auto-number Windows - Window List",
+		"default_popup": "window-autonumber-popup.html",
+		"theme_icons": [{
+			"light": "icons/window-autonumber-128-light.png",
+			"dark": "icons/window-autonumber-128-dark.png",
+			"size": 128
+		}]
+	}
 }

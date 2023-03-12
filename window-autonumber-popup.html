@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="window-autonumber-popup.css" type="text/css">
+<title>Autonumber Windows v0.5</title>
+</head>
+<body>
+<h1 id="dialogtitle"><span id="listtitle">Windows</span><span id="controls"><button id="btnRenumber" type="button" title="Renumber windows now">🔄</button>
+	<form id="frmfilter" action=""><input type="text" id="filterbar" placeholder="Filter by title or URL" value=""><button id="filterclear" type="button" title="Clear filter">❌</button></form> 
+	<button id="closepop" type="button" title="Close">🔼</button></span></h1>
+<div id="stretchbox"><ul id="winlist"></ul></div>
+<div id="divtabsperm"><form id="frmtabsperm" action="">
+	<p><em>To list window titles here, the extension needs the Tabs permission.</em> 
+	<label><input type="radio" name="tabsperm" value="yes"> Grant tabs permission</label> <label><input type="radio" name="tabsperm" value="no"> Revoke tabs permission</label></p>
+</form></div>
+</body>
+<script type="text/javascript" src="window-autonumber-popup.js"></script>
+<template id="newLI"><li winid="" incog="" focused=""><img class="favicon"><span class="wintitle"></span><span tabcontext=""></span><button class="btntablist" title="List Tabs"><img src="icons/tab-button.png"></button></li></template>
+</html>
