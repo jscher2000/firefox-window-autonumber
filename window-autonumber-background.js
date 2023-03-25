@@ -6,6 +6,7 @@
   v0.3 - Tools menu Renumber item
   v0.3.3 - Updated for Manifest v3
   v0.5 - Toolbar button (windows list) / Numberless option
+  v0.6 - Add delayed renumbering to catch tabs detached to a new window
 */
 
 function updatePreface(action){
@@ -33,8 +34,32 @@ function updatePreface(action){
 		return false;
 	});
 }
+function newWinCheck(w){
+	browser.tabs.query({windowId: w.id}).then((arrTabs) => {
+		if (arrTabs && arrTabs.length > 0){
+			updatePreface();
+		} else {
+			//console.log('arrTabs was empty! creating alarm at ' + Date.now());
+			browser.alarms.create('delayedrenumber', {delayInMinutes: 0.015}); // fire after about 1 second
+		}
+	});
+}
+
+// Alarm (similar to setTimeout) for delayed renumbering of windows created from detached tabs (and possibly other scenarios)
+function handleAlarm(alarmInfo){
+	switch (alarmInfo.name) {
+		case 'delayedrenumber':
+			//console.log(alarmInfo.name + ' being handled at ' + Date.now());
+			updatePreface();
+			break;
+		default:
+			// This should never happen
+	}
+}
+browser.alarms.onAlarm.addListener(handleAlarm)
+
 // Set up the Tools menu item
-function menuSetup(whatever){
+function menuSetup(){
 	browser.menus.create({
 		id: 'winAutonumber',
 		title: 'Auto-number Windows',
@@ -66,7 +91,7 @@ browser.menus.onClicked.addListener((menuInfo, currTab) => {
 			// Update storage
 			browser.storage.local.set({numpref: true});
 			// Listen for window opening and update
-			browser.windows.onCreated.addListener(updatePreface);
+			browser.windows.onCreated.addListener(newWinCheck);
 			// Listen for window closing and update - v0.2
 			browser.windows.onRemoved.addListener(updatePreface);
 			break;
@@ -92,28 +117,26 @@ browser.storage.local.get("numpref").then((results) => {
 	}
 	if (numPref == true){
 		// Renumber the windows
-		console.log('Renumbering...');
 		updatePreface();
 		// Listen for window opening and update
-		browser.windows.onCreated.addListener(updatePreface);
+		browser.windows.onCreated.addListener(newWinCheck);
 		// Listen for window closing and update - v0.2
 		browser.windows.onRemoved.addListener(updatePreface);
 	} 
 });
 
 // required for MV3 per https://extensionworkshop.com/documentation/develop/manifest-v3-migration-guide/ 
-//browser.runtime.onInstalled.addListener(menuSetup);
+browser.runtime.onInstalled.addListener(menuSetup);
 
 /*** Messaging handlers ***/
 function handleMessage(request, sender, sendResponse){
-	console.log(request);
 	// Open info page in window or tab
 	if (request.action == 'renumber'){
 		updatePreface();
 		// Update storage
 		browser.storage.local.set({numpref: true});
 		// Listen for window opening and update
-		browser.windows.onCreated.addListener(updatePreface);
+		browser.windows.onCreated.addListener(newWinCheck);
 		// Listen for window closing and update - v0.2
 		browser.windows.onRemoved.addListener(updatePreface);	
 	}
