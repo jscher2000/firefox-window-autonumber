@@ -7,6 +7,7 @@
   v0.3.3 - Updated for Manifest v3
   v0.5 - Toolbar button (windows list) / Numberless option
   v0.6 - Add delayed renumbering to catch tabs detached to a new window
+  v0.6.5 - Try to fix problem some users report that numbering doesn't start
 */
 
 function updatePreface(action){
@@ -109,24 +110,31 @@ browser.menus.onClicked.addListener((menuInfo, currTab) => {
 	}
 });
 
-/*** INITIALIZE ***/
-var numPref = true			// assign sequential window title preface
-browser.storage.local.get("numpref").then((results) => {
-	if (results.numpref != undefined){
-		numPref = results.numpref;
-	}
-	if (numPref == true){
-		// Renumber the windows
-		updatePreface();
-		// Listen for window opening and update
-		browser.windows.onCreated.addListener(newWinCheck);
-		// Listen for window closing and update - v0.2
-		browser.windows.onRemoved.addListener(updatePreface);
-	} 
-});
-
 // required for MV3 per https://extensionworkshop.com/documentation/develop/manifest-v3-migration-guide/ 
 browser.runtime.onInstalled.addListener(menuSetup);
+
+/*** INITIALIZE ***/
+var numPref = true			// assign sequential window title preface
+function init(){
+	browser.storage.local.get("numpref").then((results) => {
+		if (results.numpref != undefined){
+			numPref = results.numpref;
+		}
+		if (numPref == true){
+			// Renumber the windows
+			updatePreface();
+			// Listen for window opening and update
+			browser.windows.onCreated.addListener(newWinCheck);
+			if (browser.runtime.lastError) console.log("For addListener(newWinCheck):", browser.runtime.lastError);
+			// Listen for window closing and update - v0.2
+			browser.windows.onRemoved.addListener(updatePreface);
+			if (browser.runtime.lastError) console.log("For addListener(updatePreface):", browser.runtime.lastError);
+		} 
+	});
+}
+init();
+browser.runtime.onStartup.addListener(init); // v0.6.5
+browser.runtime.onInstalled.addListener(init); // v0.6.5
 
 /*** Messaging handlers ***/
 function handleMessage(request, sender, sendResponse){

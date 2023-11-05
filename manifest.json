@@ -1,7 +1,7 @@
 {
 	"name": "Auto-number Windows - stable menu order",
 	"description": "Keep your windows in the order they were opened on the Mac OS Window menu. (Manifest v3 version)",
-	"version": "0.6",
+	"version": "0.6.5",
 	"manifest_version": 3,
 	"browser_specific_settings":{
 		"gecko": {
@@ -26,7 +26,6 @@
 		"tabs"
 	],
 	"action": {
-		"browser_style": true,
 		"default_title": "Auto-number Windows - Window List",
 		"default_popup": "window-autonumber-popup.html",
 		"theme_icons": [{

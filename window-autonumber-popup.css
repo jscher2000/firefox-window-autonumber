@@ -1,4 +1,4 @@
-/* Auto-number Windows - stable menu order 0.5 */
+/* Auto-number Windows - stable menu order 0.6.5 */
 
 /* Color scheme */
 @media (prefers-color-scheme: light) {
@@ -32,6 +32,7 @@ body {
 	--body-size: 16px;
 	font-size: var(--body-size);
 	overflow-y: hidden;
+	font-family: sans-serif;
 }
 #dialogtitle {
 	font-size: 1.25em;
@@ -86,14 +87,14 @@ body {
 
 ul {
 	list-style-type: none;
-	padding: 0;
+	padding: 1px 0 0 0;
 	margin: 0;
 	overflow-x: hidden;
 	outline-color: transparent;
 }
 li {
 	display: inline-block;
-	width: calc(50% - 1px);
+	width: calc(50% - 9px);
 	margin: 0;
 	padding: 3px 0 2px 8px;
 	border-bottom: 1px solid var(--list-border-color);
@@ -103,8 +104,9 @@ li {
 li:nth-child(odd){
 	margin-right: 2px;
 }
-li:nth-child(1), li:nth-child(2){
+li {
 	border-top: 1px solid var(--list-border-color);
+	margin-top: -1px;
 }
 li:hover:not([focused="true"]):not([dummy="true"]), a:focus {
 	background-color: var(--hover-focus-color);
@@ -139,6 +141,9 @@ img.favicon[src] {
 	margin-left: -2px;
 	margin-right: 4px;
 	margin-bottom: 1px;
+}
+li[dummy="true"]::before {
+	content: " ";
 }
 
 .btntablist {

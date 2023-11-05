@@ -67,6 +67,8 @@ if (typeof browser != 'undefined'){ // live Firefox extension
 						var clone = document.importNode(newLI.content, true);
 						var li = clone.querySelector('li');
 						li.setAttribute('dummy', true);
+						li.querySelector('.wintitle').textContent = 'wintitle';
+						li.querySelector('.wintitle').style.visibility = 'hidden';
 						list.appendChild(clone);
 					}
 					// TODO Make this optional! 
